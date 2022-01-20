@@ -1,18 +1,28 @@
 package college.project.wgg;
 
+import java.util.Random;
+
 public class SecretWord {
 
-    private String actualWord = "";
-    private String currentWord = "";
+    private final String[] wordDB = {"TORONTO", "MONTREAL", "CALGARY", "OTTAWA", "EDMONTON", "MISSISSAUGA",  "WINNIPEG", "VANCOUVER", "BRAMPTON", "HAMILTON"};
+    private String actualWord;
+    private String currentWord;
 
-    public SecretWord(GameData gameData){
-        actualWord = gameData.getSecretWord();
-        currentWord = gameData.getCurrentWord();
+    public String getActualWord() {
+        return actualWord;
     }
 
-    public boolean containsLetter(String letter){
-        if(actualWord.contains(letter)){
-            if(currentWord.charAt(actualWord.indexOf(letter)) == '_'){
+    public String getCurrentWord() {
+        return currentWord;
+    }
+
+    public void setCurrentWord(String currentWord) {
+        this.currentWord = currentWord;
+    }
+
+    public boolean containsLetter(String letter) {
+        if (actualWord.contains(letter)) {
+            if (currentWord.charAt(actualWord.indexOf(letter)) == '_') {
                 System.out.println("CORRECT: " + letter + " is in the word!");
                 return true;
             }
@@ -23,11 +33,18 @@ public class SecretWord {
         return false;
     }
 
-    public boolean hasLettersRemaining(){
+    public void randomWordGenerator(){
+        Random random = new Random();
+        int randomNumber = random.nextInt(wordDB.length + 1);
+        actualWord = wordDB[randomNumber];
+        currentWord = actualWord.replaceAll("[a-zA-Z]", "_");
+    }
+
+    public boolean hasLettersRemaining() {
         return !currentWord.contains("_");
     }
 
-    public String toString(){
+    public String toString() {
         return currentWord;
     }
 }
